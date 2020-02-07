@@ -2,6 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clUserWriting"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
@@ -19,12 +21,18 @@
             android:layout_width="match_parent"
             android:padding="@dimen/padding_xxxlarge_20">
             <TextView
+                android:id="@+id/tvMemmories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Memories"
+                tools:visibility="visible"
+                android:visibility="invisible"
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/font_xlarge_16" />
             <TextView
+                android:id="@+id/tvJam1"
+                tools:visibility="visible"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
@@ -33,26 +41,35 @@
                 android:textSize="@dimen/font_xxxxxlarge_30" />
 
             <TextView
+                android:id="@+id/tvJam2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="when we"
+                tools:visibility="visible"
+                android:visibility="invisible"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_xxxxxlarge_30" />
 
             <TextView
+                android:id="@+id/tvNewJam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="Add to this JAM"
+                tools:visibility="visible"
+                android:visibility="invisible"
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/font_xxxxxlarge_30" />
 
             <TextView
+                android:id="@+id/tvNumberOfLeftJam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="5 words left"
+                tools:visibility="visible"
+                android:visibility="invisible"
                 android:textStyle="bold"
                 android:textColor="@color/dark_green"
                 android:textSize="@dimen/font_large_14" />
@@ -64,26 +81,32 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivProfile1"
+                    android:id="@+id/ivJamProfile1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    tools:visibility="visible"
+                    android:visibility="invisible"
                     android:src="@drawable/barak_obama"
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="0.2dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivProfile2"
+                    android:id="@+id/ivJamProfile2"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    tools:visibility="visible"
+                    android:visibility="invisible"
                     android:layout_marginLeft="@dimen/margin_small_10"
                     android:src="@drawable/mark_zukerberg"
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="0.2dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivProfile3"
+                    android:id="@+id/ivJamProfile3"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    tools:visibility="visible"
+                    android:visibility="invisible"
                     android:layout_marginLeft="@dimen/margin_small_10"
                     android:src="@drawable/jeff_bezos"
                     app:civ_border_color="#FF000000"

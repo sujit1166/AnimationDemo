@@ -18,18 +18,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements Animation.AnimationListener {
     private static final String TAG = "MainActivity";
-    public final int ANIM_LANGUAGE = 0;
+    public final int ANIM_LANGUAGE_SELECTION = 0;
     public final int ANIM_USERS = 1;
     public final int ANIM_PROFILE_1 = 2;
     public final int ANIM_PROFILE_2 = 3;
     public final int ANIM_PROFILE_3 = 4;
     public final int ANIM_WRITE_JAM = 5;
-    Scene scene1;
-    Scene scene2;
-    Scene scene3;
-    ConstraintLayout clRoot, clLanguageSelection;
-    private int counter = 0;
+    Scene languageSelectionScene;
+    Scene userOnBoardingScene;
+    Scene userWritingScene;
+    ConstraintLayout clLanguageSelection,clUserWriting;
+    private int counter;
     Animation moveProfile1Animation, moveProfile2Animation, moveProfile3Animation;
+    Animation jamInitAnimation, jam1Animation, jam2Animation,jam3Animation,numOfLeftJamAnimation;
     RelativeLayout rootContainer;
     CircleImageView ivProfile1, ivProfile2, ivProfile3;
 
@@ -37,30 +38,25 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        counter = 0;
-        clRoot = findViewById(R.id.clRoot);
-        scene1 = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_language_selection, this);
-        scene2 = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_multiple_users_onboarding, this);
-        scene3 = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_multiple_users_writing, this);
+        counter = ANIM_LANGUAGE_SELECTION;
+        languageSelectionScene = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_language_selection, this);
+        userOnBoardingScene = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_multiple_users_onboarding, this);
+        userWritingScene = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_multiple_users_writing, this);
 
-        moveProfile1Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile1);
-        moveProfile2Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile2);
-        moveProfile3Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile3);
-
-        moveProfile1Animation.setAnimationListener(this);
-        moveProfile2Animation.setAnimationListener(this);
-        moveProfile3Animation.setAnimationListener(this);
-
+        initAnimations();
         showLanguageSelectionView();
 
         findViewById(R.id.btnShare).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (counter == ANIM_WRITE_JAM) {
+                    return;
+                }
                 ++counter;
                 switch (counter) {
                     case ANIM_USERS:
-                        TransitionManager.go(scene2, new Slide());
-                        initProfileViews();
+                        TransitionManager.go(userOnBoardingScene, new Slide());
+                        initUserOnBoardingViews();
                         break;
                     case ANIM_PROFILE_1:
                         ivProfile1.startAnimation(moveProfile1Animation);
@@ -72,7 +68,12 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
                         ivProfile3.startAnimation(moveProfile3Animation);
                         break;
                     case ANIM_WRITE_JAM:
-                        TransitionManager.go(scene3, new Slide());
+                        TransitionManager.go(userWritingScene, new Slide());
+                        initUsersWritingViews();
+                        jamInitAnimation.reset();
+                        clUserWriting.findViewById(R.id.tvMemmories).clearAnimation();
+                        clUserWriting.findViewById(R.id.tvMemmories).startAnimation(jamInitAnimation);
+                        clUserWriting.findViewById(R.id.ivJamProfile1).startAnimation(jamInitAnimation);
                         break;
                     default:
                 }
@@ -80,19 +81,49 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         });
     }
 
-    public void showLanguageSelectionView() {
-        ((RelativeLayout) scene1.getSceneRoot()).setGravity(Gravity.BOTTOM); // to set layout at bottom
-        scene1.enter();
+
+    public void initAnimations(){
+        moveProfile1Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile1);
+        moveProfile2Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile2);
+        moveProfile3Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile3);
+
+        jamInitAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+        jam1Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+        jam2Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+        jam3Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+        numOfLeftJamAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+
+        moveProfile1Animation.setAnimationListener(this);
+        moveProfile2Animation.setAnimationListener(this);
+        moveProfile3Animation.setAnimationListener(this);
+
+        jamInitAnimation.setAnimationListener(this);
+        jam1Animation.setAnimationListener(this);
+        jam2Animation.setAnimationListener(this);
+        jam3Animation.setAnimationListener(this);
+        numOfLeftJamAnimation.setAnimationListener(this);
     }
 
-    public void initProfileViews() {
+    public void showLanguageSelectionView() {
+        ((RelativeLayout) languageSelectionScene.getSceneRoot()).setGravity(Gravity.BOTTOM); // to set layout at bottom
+        languageSelectionScene.enter();
+    }
 
-        if (scene2 != null && scene2.getSceneRoot() instanceof RelativeLayout) {
-            rootContainer = ((RelativeLayout) scene2.getSceneRoot());
+    public void initUserOnBoardingViews() {
+
+        if (userOnBoardingScene != null && userOnBoardingScene.getSceneRoot() instanceof RelativeLayout) {
+            rootContainer = ((RelativeLayout) userOnBoardingScene.getSceneRoot());
             clLanguageSelection = rootContainer.findViewById(R.id.clLanguageSelection);
             ivProfile1 = clLanguageSelection.findViewById(R.id.ivProfile1);
             ivProfile2 = clLanguageSelection.findViewById(R.id.ivProfile2);
             ivProfile3 = clLanguageSelection.findViewById(R.id.ivProfile3);
+        }
+    }
+    public void initUsersWritingViews() {
+
+        if (userWritingScene != null && userWritingScene.getSceneRoot() instanceof RelativeLayout) {
+            rootContainer = ((RelativeLayout) userWritingScene.getSceneRoot());
+            clUserWriting = rootContainer.findViewById(R.id.clUserWriting);
         }
     }
 
@@ -114,6 +145,18 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         } else if (animation == moveProfile3Animation) {
             ivProfile3.setVisibility(View.GONE);
             clLanguageSelection.findViewById(R.id.btn3).setBackground(getResources().getDrawable(R.drawable.rounded_button_dark_yellow));
+        }else if (animation == jamInitAnimation) {
+            clUserWriting.findViewById(R.id.tvJam1).startAnimation(jam1Animation);
+        }else if (animation == jam1Animation) {
+            clUserWriting.findViewById(R.id.tvJam2).startAnimation(jam2Animation);
+            clUserWriting.findViewById(R.id.ivJamProfile2).startAnimation(jam2Animation);
+        }else if (animation == jam2Animation) {
+            clUserWriting.findViewById(R.id.tvNewJam).startAnimation(jam3Animation);
+            clUserWriting.findViewById(R.id.ivJamProfile3).startAnimation(jam3Animation);
+        }else if (animation == jam3Animation) {
+            clUserWriting.findViewById(R.id.tvNumberOfLeftJam).startAnimation(numOfLeftJamAnimation);
+        }else if (animation == numOfLeftJamAnimation) {
+//            counter=0;
         }
     }
 
