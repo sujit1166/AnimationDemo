@@ -1,58 +1,78 @@
 package com.sujit.animationdemo;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.transition.Scene;
+import androidx.transition.Slide;
+import androidx.transition.TransitionManager;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainActivity extends AppCompatActivity implements Animation.AnimationListener {
-
-    RelativeLayout rlRoot, rlCircularWithUsers, rlLanguageSelection;
-    Button btnNext;
-
-    int counter = 0;
-    Animation moveProfle1Animation, moveProfle2Animation, moveProfle3Animation;
+    private static final String TAG = "MainActivity";
+    public final int ANIM_LANGUAGE = 0;
+    public final int ANIM_USERS = 1;
+    public final int ANIM_PROFILE_1 = 2;
+    public final int ANIM_PROFILE_2 = 3;
+    public final int ANIM_PROFILE_3 = 4;
+    public final int ANIM_WRITE_JAM = 5;
+    Scene scene1;
+    Scene scene2;
+    Scene scene3;
+    ConstraintLayout clRoot, clLanguageSelection;
+    private int counter = 0;
+    Animation moveProfile1Animation, moveProfile2Animation, moveProfile3Animation;
+    RelativeLayout rootContainer;
+    CircleImageView ivProfile1, ivProfile2, ivProfile3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rlRoot = findViewById(R.id.rlRoot);
-        rlCircularWithUsers = findViewById(R.id.rlCircularWithUsers);
-        rlLanguageSelection = findViewById(R.id.rlLanguageSelection);
-        btnNext = findViewById(R.id.btnShare);
+        counter = 0;
+        clRoot = findViewById(R.id.clRoot);
+        scene1 = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_language_selection, this);
+        scene2 = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_multiple_users_onboarding, this);
+        scene3 = Scene.getSceneForLayout((ViewGroup) findViewById(R.id.rlRootContainer), R.layout.partial_layout_multiple_users_writing, this);
 
-        moveProfle1Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile1);
-        moveProfle2Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile2);
-        moveProfle3Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile3);
+        moveProfile1Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile1);
+        moveProfile2Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile2);
+        moveProfile3Animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move_profile3);
 
-        moveProfle1Animation.setAnimationListener(this);
-        moveProfle2Animation.setAnimationListener(this);
-        moveProfle3Animation.setAnimationListener(this);
+        moveProfile1Animation.setAnimationListener(this);
+        moveProfile2Animation.setAnimationListener(this);
+        moveProfile3Animation.setAnimationListener(this);
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        showLanguageSelectionView();
+
+        findViewById(R.id.btnShare).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ++counter;
                 switch (counter) {
-                    case 1:
-                        rlLanguageSelection.setVisibility(View.GONE);
-                        rlCircularWithUsers.setVisibility(View.VISIBLE);
+                    case ANIM_USERS:
+                        TransitionManager.go(scene2, new Slide());
+                        initProfileViews();
                         break;
-                    case 2:
-                        rlCircularWithUsers.findViewById(R.id.ivProfile1).startAnimation(moveProfle1Animation);
+                    case ANIM_PROFILE_1:
+                        ivProfile1.startAnimation(moveProfile1Animation);
                         break;
-                    case 3:
-                        rlCircularWithUsers.findViewById(R.id.ivProfile2).startAnimation(moveProfle2Animation);
+                    case ANIM_PROFILE_2:
+                        ivProfile2.startAnimation(moveProfile2Animation);
                         break;
-                    case 4:
-                        rlCircularWithUsers.findViewById(R.id.ivProfile3).setVisibility(View.GONE);
-                        rlCircularWithUsers.findViewById(R.id.btn3).setBackgroundColor(getResources().getColor(R.color.dark_yellow));
-//                        rlCircularWithUsers.findViewById(R.id.ivProfile3).startAnimation(moveProfle3Animation); // could not animate as per required
+                    case ANIM_PROFILE_3:
+                        ivProfile3.startAnimation(moveProfile3Animation);
+                        break;
+                    case ANIM_WRITE_JAM:
+                        TransitionManager.go(scene3, new Slide());
                         break;
                     default:
                 }
@@ -60,23 +80,40 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         });
     }
 
+    public void showLanguageSelectionView() {
+        ((RelativeLayout) scene1.getSceneRoot()).setGravity(Gravity.BOTTOM); // to set layout at bottom
+        scene1.enter();
+    }
+
+    public void initProfileViews() {
+
+        if (scene2 != null && scene2.getSceneRoot() instanceof RelativeLayout) {
+            rootContainer = ((RelativeLayout) scene2.getSceneRoot());
+            clLanguageSelection = rootContainer.findViewById(R.id.clLanguageSelection);
+            ivProfile1 = clLanguageSelection.findViewById(R.id.ivProfile1);
+            ivProfile2 = clLanguageSelection.findViewById(R.id.ivProfile2);
+            ivProfile3 = clLanguageSelection.findViewById(R.id.ivProfile3);
+        }
+    }
+
     @Override
     public void onAnimationStart(Animation animation) {
+
     }
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        if (animation == moveProfle1Animation) {
-            rlCircularWithUsers.findViewById(R.id.ivProfile1).setVisibility(View.GONE);
-            rlCircularWithUsers.findViewById(R.id.btn1).setBackgroundColor(getResources().getColor(R.color.dark_red));
+        if (animation == moveProfile1Animation) {
+            ivProfile1.setVisibility(View.GONE);
+            clLanguageSelection.findViewById(R.id.btn1).setBackground(getResources().getDrawable(R.drawable.rounded_button_dark_red));
 
-        } else if (animation == moveProfle2Animation) {
-            rlCircularWithUsers.findViewById(R.id.ivProfile2).setVisibility(View.GONE);
-            rlCircularWithUsers.findViewById(R.id.btn2).setBackgroundColor(getResources().getColor(R.color.dark_orange));
+        } else if (animation == moveProfile2Animation) {
+            ivProfile2.setVisibility(View.GONE);
+            clLanguageSelection.findViewById(R.id.btn2).setBackground(getResources().getDrawable(R.drawable.rounded_button_dark_orange));
 
-        } else if (animation == moveProfle3Animation) {
-//            rlCircularWithUsers.findViewById(R.id.btn3).setBackgroundColor(getResources().getColor(R.color.dark_yellow));
-//            rlCircularWithUsers.findViewById(R.id.ivProfile3).setVisibility(View.GONE);
+        } else if (animation == moveProfile3Animation) {
+            ivProfile3.setVisibility(View.GONE);
+            clLanguageSelection.findViewById(R.id.btn3).setBackground(getResources().getDrawable(R.drawable.rounded_button_dark_yellow));
         }
     }
 
@@ -84,4 +121,5 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     public void onAnimationRepeat(Animation animation) {
 
     }
+
 }
