@@ -1,55 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="@dimen/font_large_14"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:padding="@dimen/padding_xxxlarge_20">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Memories"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/font_xlarge_16" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small_10"
+                android:text="I miss the days"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_xxxxxlarge_30" />
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="314dp"
-                android:layout_height="34dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/textView4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small_10"
+                android:text="when we"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_xxxxxlarge_30" />
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="316dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="48dp"
-                android:layout_marginBottom="52dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textView4"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textView4" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small_10"
+                android:text="Add to this JAM"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/font_xxxxxlarge_30" />
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="310dp"
-                android:layout_height="38dp"
-                android:layout_marginBottom="32dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/textView3"
-                app:layout_constraintEnd_toEndOf="@+id/textView2"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textView2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small_10"
+                android:text="5 words left"
+                android:textStyle="bold"
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/font_large_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivProfile1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/barak_obama"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="0.2dp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivProfile2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="@dimen/margin_small_10"
+                    android:src="@drawable/mark_zukerberg"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="0.2dp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivProfile3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="@dimen/margin_small_10"
+                    android:src="@drawable/jeff_bezos"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="0.2dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
