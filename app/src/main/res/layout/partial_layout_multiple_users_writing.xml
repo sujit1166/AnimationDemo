@@ -7,38 +7,41 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/font_large_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="@dimen/font_large_14"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_width="match_parent"
             android:padding="@dimen/padding_xxxlarge_20">
+
             <TextView
                 android:id="@+id/tvMemmories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Memories"
-                tools:visibility="visible"
-                android:visibility="invisible"
                 android:textColor="@color/dark_gray"
-                android:textSize="@dimen/font_xlarge_16" />
+                android:textSize="@dimen/font_xlarge_16"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+
             <TextView
                 android:id="@+id/tvJam1"
-                tools:visibility="visible"
-                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="I miss the days"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_xxxxxlarge_30" />
+                android:textSize="@dimen/font_xxxxxlarge_30"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvJam2"
@@ -46,10 +49,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="when we"
-                tools:visibility="visible"
-                android:visibility="invisible"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_xxxxxlarge_30" />
+                android:textSize="@dimen/font_xxxxxlarge_30"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvNewJam"
@@ -57,10 +60,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="Add to this JAM"
-                tools:visibility="visible"
-                android:visibility="invisible"
                 android:textColor="@color/dark_gray"
-                android:textSize="@dimen/font_xxxxxlarge_30" />
+                android:textSize="@dimen/font_xxxxxlarge_30"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvNumberOfLeftJam"
@@ -68,11 +71,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small_10"
                 android:text="5 words left"
-                tools:visibility="visible"
-                android:visibility="invisible"
-                android:textStyle="bold"
                 android:textColor="@color/dark_green"
-                android:textSize="@dimen/font_large_14" />
+                android:textSize="@dimen/font_large_14"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,33 +87,33 @@
                     android:id="@+id/ivJamProfile1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    tools:visibility="visible"
-                    android:visibility="invisible"
                     android:src="@drawable/barak_obama"
+                    android:visibility="invisible"
                     app:civ_border_color="#FF000000"
-                    app:civ_border_width="0.2dp" />
+                    app:civ_border_width="0.2dp"
+                    tools:visibility="visible" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivJamProfile2"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    tools:visibility="visible"
-                    android:visibility="invisible"
                     android:layout_marginLeft="@dimen/margin_small_10"
                     android:src="@drawable/mark_zukerberg"
+                    android:visibility="invisible"
                     app:civ_border_color="#FF000000"
-                    app:civ_border_width="0.2dp" />
+                    app:civ_border_width="0.2dp"
+                    tools:visibility="visible" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivJamProfile3"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    tools:visibility="visible"
-                    android:visibility="invisible"
                     android:layout_marginLeft="@dimen/margin_small_10"
                     android:src="@drawable/jeff_bezos"
+                    android:visibility="invisible"
                     app:civ_border_color="#FF000000"
-                    app:civ_border_width="0.2dp" />
+                    app:civ_border_width="0.2dp"
+                    tools:visibility="visible" />
 
             </LinearLayout>
 
@@ -118,4 +121,43 @@
 
 
     </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_xxxlarge_20"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_white"
+            android:text="Replay"
+            android:textStyle="bold"
+
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_xxxlarge_20"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_white"
+            android:text="Need Help?"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.323"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintTop_toTopOf="@+id/button" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
