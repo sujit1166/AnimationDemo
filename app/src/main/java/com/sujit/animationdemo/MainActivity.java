@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     }
 
     public void showLanguageSelectionView() {
-        ((RelativeLayout) languageSelectionScene.getSceneRoot()).setGravity(Gravity.BOTTOM); // to set layout at bottom
         languageSelectionScene.enter();
     }
 
